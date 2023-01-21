@@ -23,24 +23,7 @@ public class AppMain extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 
-		//Search for server host
-		System.out.println("Searching for server");
-		try (Socket socket = new Socket("localhost", 9999)) {
-			System.out.println("Connected to server");
-
-			//Server Input and Output Streams
-			clientOut = new ObjectOutputStream(socket.getOutputStream());
-			serverIn = new ObjectInputStream(socket.getInputStream());
-
-			clientOut.writeObject(new ServerMessage("LoginRequest"));
-			clientOut.flush();
-			response = (ServerMessage) serverIn.readObject();
-			System.out.println(response.getResponse());
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		testServerRequest();
 
 	}
 
