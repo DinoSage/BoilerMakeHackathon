@@ -2,6 +2,8 @@ package com.mygdx.app;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
+
 
 public class User implements Serializable {
     private String username;
@@ -103,6 +105,16 @@ public class User implements Serializable {
         return counter;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        return start == this.start && points == this.points && percentTaskCompleted == this.percentTaskCompleted && streakCounter == this.streakCounter;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(start, points, percentTaskCompleted, tasks, streakCounter);
+        }
     public String getUsername() {
         return username;
     }
