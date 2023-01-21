@@ -114,7 +114,8 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(start, points, percentTaskCompleted, tasks, streakCounter);
-        }
+    }
+
     public String getUsername() {
         return username;
     }
