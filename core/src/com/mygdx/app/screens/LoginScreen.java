@@ -11,7 +11,7 @@ public class LoginScreen extends UIScreen {
 
     // Constructor
     public LoginScreen() {
-        super(500, 100);
+        super(1000, 500);
     }
     @Override
     protected void setup() {

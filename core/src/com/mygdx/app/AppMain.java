@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.app.screens.HomeScreen;
 import com.mygdx.app.screens.LoginScreen;
+import com.mygdx.app.screens.MainScreen;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -18,6 +20,7 @@ public class AppMain extends Game {
 
 	Screen homeScreen;
 	Screen loginScreen;
+	Screen mainScreen;
 
 	ServerMessage request;
 	ServerMessage response;
@@ -30,7 +33,8 @@ public class AppMain extends Game {
 		//img = new Texture("badlogic.jpg");
 		homeScreen = new HomeScreen();
 		loginScreen = new LoginScreen();
-		this.setScreen(loginScreen);
+		mainScreen = new MainScreen();
+		this.setScreen(mainScreen);
 
 
 		testServerRequest();
