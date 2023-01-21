@@ -32,9 +32,4 @@ public class HomeScreen extends UIScreen {
 
         mainTable.add(label);
     }
-
-    @Override
-    public void show() {
-        super.show();
-    }
 }
