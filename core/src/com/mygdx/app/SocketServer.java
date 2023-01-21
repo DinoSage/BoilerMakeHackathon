@@ -12,7 +12,9 @@ class SocketServer {
 
         try {
             // server is listening on port 9999
-            server = new ServerSocket(9999);
+            //server = new ServerSocket(9999);
+            server = new ServerSocket();
+            server.bind(new InetSocketAddress("10.184.46.131", 9999));
             server.setReuseAddress(true);
 
             // running infinite loop for getting
