@@ -25,9 +25,8 @@ public class AppMain extends ApplicationAdapter {
 
 		//Search for server host
 		System.out.println("Searching for server");
-		try (Socket socket = new Socket("localhost", 9999)) {
+		try (Socket socket = new Socket("10.184.46.131", 9999)) {
 			System.out.println("Connected to server");
-
 			//Server Input and Output Streams
 			clientOut = new ObjectOutputStream(socket.getOutputStream());
 			serverIn = new ObjectInputStream(socket.getInputStream());
