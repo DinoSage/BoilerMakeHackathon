@@ -8,11 +8,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class AppMain extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("download.jpg");
+		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class AppMain extends ApplicationAdapter {
 		batch.draw(img, 0, 0);
 		batch.end();
 	}
-	
+
 	@Override
 	public void dispose () {
 		batch.dispose();
