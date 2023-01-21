@@ -20,10 +20,17 @@ public abstract class UIScreen implements Screen {
         camera = new OrthographicCamera();
         //viewport = new ScreenViewport(camera);
         viewport = new ExtendViewport(minWorldWidth, minWorldHeight, camera);
-        //viewport.setMaxWorldHeight(minWorldHeight);
+        viewport.setMaxWorldHeight(minWorldHeight);
         stage = new Stage(viewport);
         mainTable = new Table();
         stage.addActor(mainTable);
+        mainTable.setFillParent(true);
+        mainTable.setDebug(true);
+
+        //viewport.setWorldSize(20, 20);
+        //camera.position.set(0, 0, 0);
+        //viewport.apply();
+
     }
 
     @Override
@@ -41,7 +48,7 @@ public abstract class UIScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     @Override
