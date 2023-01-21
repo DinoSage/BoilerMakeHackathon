@@ -5,17 +5,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.mygdx.app.AssetStorage;
 import com.mygdx.app.UIScreen;
 
 public class LoginScreen extends UIScreen {
 
     // Constructor
     public LoginScreen() {
-        super(500, 100);
+        super(1000, 500);
     }
     @Override
     protected void setup() {
-        Skin skin = new Skin(Gdx.files.internal("glassy-ui.json"));
+        Skin skin = AssetStorage.getInstance().skin;
 
         // Screen Title
         Label title = new Label("Log In!", skin);
@@ -43,5 +44,8 @@ public class LoginScreen extends UIScreen {
         loginBtn.setStyle(skin.get("small", TextButton.TextButtonStyle.class));
         mainTable.row();
         mainTable.add(loginBtn).colspan(2).prefSize(title.getPrefWidth(), title.getPrefHeight());
+
+        // Add UI Functionality
+
     }
 }
