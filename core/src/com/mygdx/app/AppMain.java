@@ -15,9 +15,8 @@ import java.io.*;
 import java.net.Socket;
 
 public class AppMain extends Game {
-	SpriteBatch batch;
-	Texture img;
 
+	AssetStorage assets;
 	Screen homeScreen;
 	Screen loginScreen;
 	Screen mainScreen;
@@ -29,12 +28,15 @@ public class AppMain extends Game {
 
 	@Override
 	public void create () {
-		//batch = new SpriteBatch();
-		//img = new Texture("badlogic.jpg");
+
+		// Create Asset Storage
+		assets = AssetStorage.getInstance();
+		assets.startLoad();
+
 		homeScreen = new HomeScreen();
 		loginScreen = new LoginScreen();
 		mainScreen = new MainScreen();
-		this.setScreen(mainScreen);
+		this.setScreen(loginScreen);
 
 
 		testServerRequest();
@@ -43,6 +45,7 @@ public class AppMain extends Game {
 	@Override
 	public void render () {
 		ScreenUtils.clear(.2f, .2f, .2f, 1);
+		assets.render();
 		super.render();
 		/*batch.begin();
 		batch.draw(img, 0, 0);
@@ -51,8 +54,7 @@ public class AppMain extends Game {
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
 	}
 
 	public void testServerRequest() {
