@@ -7,24 +7,27 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.app.screens.HomeScreen;
+import com.mygdx.app.screens.LoginScreen;
 
 public class AppMain extends Game {
 	SpriteBatch batch;
 	Texture img;
 
 	Screen homeScreen;
+	Screen loginScreen;
 
 	@Override
 	public void create () {
 		//batch = new SpriteBatch();
 		//img = new Texture("badlogic.jpg");
 		homeScreen = new HomeScreen();
-		this.setScreen(homeScreen);
+		loginScreen = new LoginScreen();
+		this.setScreen(loginScreen);
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0, 0, 0, 1);
+		ScreenUtils.clear(.2f, .2f, .2f, 1);
 		super.render();
 		/*batch.begin();
 		batch.draw(img, 0, 0);

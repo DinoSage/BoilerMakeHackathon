@@ -20,7 +20,6 @@ public abstract class UIScreen implements Screen {
         camera = new OrthographicCamera();
         //viewport = new ScreenViewport(camera);
         viewport = new ExtendViewport(minWorldWidth, minWorldHeight, camera);
-        viewport.setMaxWorldHeight(minWorldHeight);
         stage = new Stage(viewport);
         mainTable = new Table();
         stage.addActor(mainTable);
