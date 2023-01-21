@@ -7,6 +7,8 @@ import java.util.*;
 // Server class
 class SocketServer {
 
+    private static ServerEnvironment serverEnvironment = new ServerEnvironment();
+
     public static void main(String[] args) {
         ServerSocket server = null;
 
@@ -77,14 +79,23 @@ class SocketServer {
                 while (message.getRequest() != "Exit Request") {
 
                     switch (message.getRequest()) {
+
+                        case ("TestRequest"):
+                            message = testRequest(message);
+                            //serverOut.writeObject(message);
+                            //serverOut.flush();
+                            break;
+
                         case ("LoginRequest"):
                             message = loginRequest(message);
-                            serverOut.writeObject(message);
-                            serverOut.flush();
+                            //serverOut.writeObject(message);
+                            //serverOut.flush();
                             break;
 
                         default:
                     }
+                    serverOut.writeObject(message);
+                    serverOut.flush();
 
                     System.out.println("Response sent: " + message.getResponse()); //Test
                     System.out.println("Server looking for request..."); //Test
@@ -113,17 +124,31 @@ class SocketServer {
             }
         }
 
-        public String[] interpretRequest(String request) {
-            if (request == null) {
-                return null;
-            }
-            return request.split(",");
+        public ServerMessage testRequest(ServerMessage request) {
+            System.out.println("Test request found"); //Test
+            request.setResponse("Test Success");
+            System.out.println("Test Response Compiled"); //Test
+            return request;
         }
 
         public ServerMessage loginRequest(ServerMessage request) {
-            System.out.println("Login request found"); //Test
-            request.setResponse("Success");
-            System.out.println("Response Compiled"); //Test
+            System.out.println("Login request found:\n     usrnm: " + request.getObject1() + "    pwd: " + request.getObject2()); //Test
+            String username = (String) request.getObject1();
+            String password = (String) request.getObject2();
+
+            User user = serverEnvironment.getUser((String) request.getObject1());
+            if (user == null) {
+                user = new User(username, password);
+                serverEnvironment.addUser(user);
+                request.setResponse("New User Login");
+            } else {
+                request.setResponse("Existing User Login");
+            }
+            request.setObject3(user);
+            System.out.println("Login Response Compiled"); //Test
+
+            System.out.println("Logged in: " + serverEnvironment.getUser(username).getUsername());
+
             return request;
         }
     }

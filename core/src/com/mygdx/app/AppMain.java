@@ -23,6 +23,7 @@ public class AppMain extends Game {
 	ServerMessage response;
 	ObjectOutputStream clientOut;
 	ObjectInputStream serverIn;
+	SocketClient clientManager;
 
 	User user;
 
@@ -35,7 +36,10 @@ public class AppMain extends Game {
 		this.setScreen(loginScreen);
 
 
-		testServerRequest();
+		clientManager = new SocketClient();
+		//clientManager.testServerRequest();
+		clientManager.loginRequest("Nareynater", "password");
+		//testServerRequest();
 	}
 
 	@Override
