@@ -1,8 +1,9 @@
 package com.mygdx.app;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class Leaderboard {
+public class Leaderboard implements Serializable {
 
     private ArrayList<User> users;
     private int hoursPerStreak;

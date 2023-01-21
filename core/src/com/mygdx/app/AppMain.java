@@ -25,6 +25,9 @@ public class AppMain extends Game {
 	ServerMessage response;
 	ObjectOutputStream clientOut;
 	ObjectInputStream serverIn;
+	SocketClient clientManager;
+
+	User user;
 
 	@Override
 	public void create () {
@@ -39,7 +42,10 @@ public class AppMain extends Game {
 		this.setScreen(loginScreen);
 
 
-		testServerRequest();
+		clientManager = new SocketClient();
+		//clientManager.testServerRequest();
+		clientManager.loginRequest("Nareynater", "password");
+		//testServerRequest();
 	}
 
 	@Override
@@ -60,7 +66,8 @@ public class AppMain extends Game {
 	public void testServerRequest() {
 		//Search for server host
 		System.out.println("Searching for server");
-		try (Socket socket = new Socket("localhost", 9999)) {
+		try (Socket socket = new Socket("10.184.46.131", 9999)) {
+			//try (Socket socket = new Socket("10.184.46.131", 9999)) {
 			System.out.println("Connected to server");
 
 			//Server Input and Output Streams
