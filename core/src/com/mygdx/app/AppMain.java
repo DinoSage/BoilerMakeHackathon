@@ -1,6 +1,8 @@
 package com.mygdx.app;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -53,7 +55,7 @@ public class AppMain extends Game {
 		super.render();
 		/*batch.begin();
 		batch.draw(img, 0, 0);
-		batch.end();
+		batch.end();*/
 	}
 
 	@Override
