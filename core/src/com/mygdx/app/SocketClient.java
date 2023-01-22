@@ -39,8 +39,9 @@ public class SocketClient {
     }
 
 
-    public void loginRequest(String username, String password) {
+    public User loginRequest(String username, String password) {
         ServerMessage response = sendServerRequest(new ServerMessage("LoginRequest", username, password));
+        return (User) response.getObject3();
     }
 
     public void joinLeaderboardRequest(User user, String username) {
