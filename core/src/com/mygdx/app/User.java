@@ -16,7 +16,8 @@ public class User implements Serializable {
 
     private Leaderboard leaderboard;
 
-    private Array<Task> tasks;
+    //private Array<Task> tasks;
+    private SArray<Task> tasks;
 
     private int streakCounter;
 
@@ -24,7 +25,8 @@ public class User implements Serializable {
         this.username = username;
         this.password = password;
 
-        this.tasks = new Array<>();
+        //this.tasks = new Array<>();
+        this.tasks = new SArray<>();
         this.percentTaskCompleted = 0;
         this.points = 0;
         this.streakCounter = 0;
@@ -33,10 +35,11 @@ public class User implements Serializable {
         this.leaderboard = new Leaderboard(this);
     }
 
-    public User(String username, String password, int hours, int percentTaskCompleted, int points, Array<Task> tasks, int streakCounter) {
+    public User(String username, String password, int hours, int percentTaskCompleted, int points, SArray<Task> tasks, int streakCounter) {
         this.username = username;
         this.password = password;
 
+        //this.tasks = tasks;
         this.tasks = tasks;
         this.percentTaskCompleted = percentTaskCompleted;
         this.points = points;
@@ -47,7 +50,8 @@ public class User implements Serializable {
 
     }
 
-    public User(int hours, int percentTaskCompleted, int points, Array<Task> tasks, int streakCounter) {
+    public User(int hours, int percentTaskCompleted, int points, SArray<Task> tasks, int streakCounter) {
+        //this.tasks = tasks;
         this.tasks = tasks;
         this.percentTaskCompleted = percentTaskCompleted;
         this.points = points;
@@ -91,11 +95,13 @@ public class User implements Serializable {
         return tasks;
     }
 
-    public void setTasks(Array<Task> tasks) {
+    public void setTasks(SArray<Task> tasks) {
+        //this.tasks = tasks;
         this.tasks = tasks;
     }
 
-    public Array<Task> updateTasks(Task task) {
+    public SArray<Task> updateTasks(Task task) {
+        //tasks.add(task);
         tasks.add(task);
         return tasks;
     }

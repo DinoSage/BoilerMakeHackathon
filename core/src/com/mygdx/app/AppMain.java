@@ -49,7 +49,8 @@ public class AppMain extends Game {
 		// Dummy User w/ Dummy Tasks
 		User user = new User("user1", "passy");
 
-		Array<Task> taskList = new Array<>();
+		//Array<Task> taskList = new Array<>();
+		SArray<Task> taskList = new SArray<>();
 		for (int i = 0; i < 20; i++) {
 			String name = "Task#" + i;
 			Task task = new Task(name, false);
