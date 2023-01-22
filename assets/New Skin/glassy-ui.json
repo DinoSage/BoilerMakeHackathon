@@ -176,11 +176,15 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: font-big
-		checkedFontColor: black
 		up: button
 		down: button-down
 	}
 	small: {
+		font: font
+		up: button-small
+		down: button-small-down
+	}
+	radio: {
 		font: font
 		up: button-small
 		down: button-small-down

@@ -40,6 +40,7 @@ public class AssetStorage {
 
     //Instance variables of certain / current assets - Main Variables
     public Skin skin;
+    public User currentUser;
 
     //Should always be rendering for screens that implement this
     public void render(){
