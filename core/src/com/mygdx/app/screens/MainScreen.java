@@ -27,15 +27,17 @@ public class MainScreen extends UIScreen {
         final TextButton tasks = new TextButton("Tasks", skin, "radio");
         TextButton social = new TextButton("Social", skin, "radio");
         TextButton dashboard = new TextButton("Dashboard", skin, "radio");
+        TextButton account = new TextButton("Account", skin, "radio");
 
         // Add Buttons to toolbar
         toolbar.addActor(tasks);
         toolbar.addActor(social);
         toolbar.addActor(dashboard);
+        toolbar.addActor(account);
 
         // Create button group to manage buttons
         ButtonGroup buttons = new ButtonGroup();
-        buttons.add(tasks, social, dashboard);
+        buttons.add(tasks, social, dashboard, account);
         buttons.setMaxCheckCount(1);
 
         mainTable.add(toolbar).top();
