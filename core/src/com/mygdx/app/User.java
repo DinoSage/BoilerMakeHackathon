@@ -93,7 +93,7 @@ public class User implements Serializable {
         return (now - start) / (60.0 * 60.0 * 1000.0);
     }
 
-    public Array<Task> getTasks() {
+    public SArray<Task> getTasks() {
         return tasks;
     }
 
@@ -108,11 +108,11 @@ public class User implements Serializable {
         return tasks;
     }
 
-    public int getNumberOfTasks(Array<Task> tasks) {
+    public int getNumberOfTasks(SArray<Task> tasks) {
         return tasks.size;
     }
 
-    public int getNumberOfTasksCompleted(Array<Task> tasks) {
+    public int getNumberOfTasksCompleted(SArray<Task> tasks) {
         int counter = 0;
 
         for (int i = 0; i < tasks.size; i++) {
@@ -167,11 +167,36 @@ public class User implements Serializable {
         return productive;
     }
 
+    public boolean isProductive() {
+        return productive;
+    }
+
     public void refreshHours() {
         if (productive) {
             double productivityDuration = (double) (System.currentTimeMillis() - productivityStart);
             hours += productivityDuration / 3600000;
             productivityStart = System.currentTimeMillis();
         }
+    }
+
+    public long getProductivityStart() {
+        return productivityStart;
+    }
+
+    //public void overrideUser(User user) {
+    //    this = user;
+    //}
+
+    public void overrideUser(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        //this.start = start;
+        this.hours = user.getHours();
+        this.percentTaskCompleted = user.getPercentTaskCompleted();
+        this.leaderboard = user.getLeaderboard();
+        this.tasks = user.getTasks();
+        this.productive = user.isProductive();
+        this.productivityStart = user.getProductivityStart();
+        this.streakCounter = user.getStreakCounter();
     }
 }

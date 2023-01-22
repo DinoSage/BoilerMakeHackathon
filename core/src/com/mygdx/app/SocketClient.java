@@ -47,8 +47,8 @@ public class SocketClient {
         ServerMessage response = sendServerRequest(new ServerMessage("JoinLeaderboardRequest", user, username));
     }
 
-    public SArray<User> refreshRequest(User user, boolean toggleProductivity) {
-        ServerMessage response = sendServerRequest(new ServerMessage("RefreshRequest", user, toggleProductivity));
+    public SArray<User> refreshRequest(User user) {
+        ServerMessage response = sendServerRequest(new ServerMessage("RefreshRequest", user));
         return (SArray<User>) response.getObject3();
     }
 
