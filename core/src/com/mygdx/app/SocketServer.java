@@ -102,6 +102,10 @@ class SocketServer {
                             message = joinLeaderboardRequest(message);
                             break;
 
+                        case ("RefreshRequest"):
+                            message = refreshRequest(message);
+                            break;
+
                         default:
                     }
                     serverOut.writeObject(message);
@@ -175,6 +179,20 @@ class SocketServer {
                 user.setLeaderboard(creator.getLeaderboard());
                 request.setResponse("Joined new Leaderboard");
             }
+            return request;
+        }
+
+        public ServerMessage refreshRequest(ServerMessage request) {
+            User user = (User) request.getObject1();
+            boolean toggleProductivity = (boolean) request.getObject2();
+            User sUser = serverEnvironment.getUser(user.getUsername());
+            if (toggleProductivity) {
+                sUser.toggleProductivity();
+            }
+            for (User cUser : serverEnvironment.getUsers()) {
+                cUser.refreshHours();
+            }
+            request.setObject3(serverEnvironment.getUsers());
             return request;
         }
     }

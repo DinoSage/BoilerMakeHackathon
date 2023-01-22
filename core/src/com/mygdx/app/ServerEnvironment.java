@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class ServerEnvironment {
 
     //ArrayList<Leaderboard> leaderboards;
-    ArrayList<User> users;
+    private SArray<User> users;
 
     public ServerEnvironment() {
         //leaderboards = new ArrayList<>();
-        users = new ArrayList<>();
+        users = new SArray<>();
     }
 
     //public void addLeaderboard(Leaderboard leaderboard) {
@@ -46,6 +46,10 @@ public class ServerEnvironment {
             }
         }
         return null;
+    }
+
+    public SArray<User> getUsers() {
+        return users;
     }
 
 }

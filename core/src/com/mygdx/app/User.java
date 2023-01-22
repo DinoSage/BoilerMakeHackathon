@@ -19,6 +19,8 @@ public class User implements Serializable {
     //private Array<Task> tasks;
     private SArray<Task> tasks;
 
+    private boolean productive = false;
+    private long productivityStart = 0;
     private int streakCounter;
 
     public User(String username, String password) {
@@ -154,5 +156,22 @@ public class User implements Serializable {
 
     public void setLeaderboard(Leaderboard leaderboard) {
         this.leaderboard = leaderboard;
+    }
+
+    public boolean toggleProductivity() {
+        refreshHours();
+        productive = !productive;
+        if (productive) {
+            productivityStart = System.currentTimeMillis();
+        }
+        return productive;
+    }
+
+    public void refreshHours() {
+        if (productive) {
+            double productivityDuration = (double) (System.currentTimeMillis() - productivityStart);
+            hours += productivityDuration / 3600000;
+            productivityStart = System.currentTimeMillis();
+        }
     }
 }
