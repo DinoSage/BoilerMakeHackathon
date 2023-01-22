@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.app.*;
+import com.mygdx.app.Views.DashboardView;
 import com.mygdx.app.Views.SocialView;
 import com.mygdx.app.Views.TaskView;
 
@@ -71,7 +72,7 @@ public class MainScreen extends UIScreen {
         dashboard.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("DASHBOARD");
+                switchView(DASHBOARD_VIEW);
             }
         });
 
@@ -95,6 +96,9 @@ public class MainScreen extends UIScreen {
                 break;
             case SOCIAL_VIEW:
                 currentView = new SocialView(stage);
+                break;
+            case DASHBOARD_VIEW:
+                currentView = new DashboardView(stage);
                 break;
         }
 

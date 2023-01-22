@@ -1,10 +1,7 @@
 package com.mygdx.app.Views;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.mygdx.app.AppConstants;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.Leaderboard;
@@ -22,6 +19,18 @@ public class DashboardView extends Table {
 
         TextButton startBtn = new TextButton("Start", skin, "small");
         TextButton endBtn = new TextButton("End", skin, "small");
+        Label streakLabel = new Label("Streak Count", skin, "big");
+        Label streakNum  = new Label(String.valueOf(assets.currentUser.getStreakCounter()), skin, "big");
+        Label time = new Label(String.valueOf(assets.currentUser.elapsedTimeHours()), skin, "big");
+
+        this.add(progress).colspan(3).fill().expandX();
+        this.row();
+        this.add(startBtn).expandX();
+        this.add(time).colspan(2).expandX();
+        this.row();
+        this.add(endBtn).expandX();
+        this.add(streakLabel).expandX();
+        this.add(streakNum).expandX();
     }
 
 
