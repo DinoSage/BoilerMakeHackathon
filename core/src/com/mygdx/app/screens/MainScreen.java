@@ -80,7 +80,7 @@ public class MainScreen extends UIScreen {
                 popup.row();
 
                 // Buttons
-                TextButton editBtn = new TextButton("Edit", skin, "small");
+                TextButton updateBtn = new TextButton("Update", skin, "small");
                 TextButton deleteBtn = new TextButton("Delete", skin, "small");
                 TextButton closeBtn = new TextButton("Close", skin, "small");
 
@@ -90,7 +90,7 @@ public class MainScreen extends UIScreen {
                 final CheckBox complete = new CheckBox("", skin);
                 complete.setChecked(task.isTaskComplete());
 
-                popup.add(editBtn);
+                popup.add(updateBtn);
                 popup.add(complete);
                 popup.row();
                 popup.add(deleteBtn);
@@ -99,7 +99,7 @@ public class MainScreen extends UIScreen {
                 popup.show(stage);
 
                 // Button Functionality
-                editBtn.addListener(new ChangeListener() {
+                updateBtn.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
                         task.setComplete(complete.isChecked());
