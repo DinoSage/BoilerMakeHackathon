@@ -6,7 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+
+import com.mygdx.app.AssetStorage;
+
 import com.mygdx.app.UIScreen;
 
 import javax.swing.event.ChangeEvent;
@@ -15,11 +19,11 @@ public class LoginScreen extends UIScreen {
 
     // Constructor
     public LoginScreen() {
-        super(500, 100);
+        super(1000, 500);
     }
     @Override
     protected void setup() {
-        Skin skin = new Skin(Gdx.files.internal("glassy-ui.json"));
+        Skin skin = AssetStorage.getInstance().skin;
 
         // Screen Title
         Label title = new Label("Log In!", skin);
@@ -48,6 +52,7 @@ public class LoginScreen extends UIScreen {
         mainTable.row();
         mainTable.add(loginBtn).colspan(2).prefSize(title.getPrefWidth(), title.getPrefHeight());
 
+
         loginBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -55,6 +60,10 @@ public class LoginScreen extends UIScreen {
                 passwordInput.getText();
             }
         });
+
+        // Add UI Functionality
+
+
     }
 
 }
