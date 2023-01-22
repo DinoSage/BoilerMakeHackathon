@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class AppMain extends Game {
 
+	public static AppMain instance;
+
 	AssetStorage assets;
 
 	public static final int HOME_SCREEN = 0;
@@ -33,7 +35,7 @@ public class AppMain extends Game {
 	ServerMessage response;
 	ObjectOutputStream clientOut;
 	ObjectInputStream serverIn;
-	SocketClient clientManager;
+	public SocketClient clientManager;
 
 	@Override
 	public void create () {
@@ -47,7 +49,7 @@ public class AppMain extends Game {
 
 		clientManager = new SocketClient();
 		//clientManager.testServerRequest();
-		clientManager.loginRequest("Nareynater", "password");
+		//clientManager.loginRequest("Nareynater", "password");
 		//testServerRequest();
 
 		// Dummy User w/ Dummy Tasks

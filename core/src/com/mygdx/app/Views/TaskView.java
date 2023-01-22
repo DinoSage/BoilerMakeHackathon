@@ -7,20 +7,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
 import com.mygdx.app.AppConstants;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.Task;
 
-public class TaskView {
+public class TaskView extends Table {
 
-    public static Table createTasksTable(final Stage stage) {
-        // Neccessary Information
+    public TaskView(final Stage stage) {
+        // Necessary Information
         final AssetStorage assets = AssetStorage.getInstance();
         final Skin skin = AssetStorage.getInstance().skin;
 
         // Create Table for Task View
-        Table taskTable = new Table();
-        taskTable.setDebug(true);
+        this.setDebug(true);
 
 
 
@@ -30,6 +30,10 @@ public class TaskView {
         taskList.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // Exit if no item selected
+                if(taskList.getSelected() == null) {
+                    return;
+                }
 
                 final Task task = (Task) taskList.getSelected();
 
@@ -102,16 +106,16 @@ public class TaskView {
             }
         });
 
-        taskTable.add(taskList).expand().fill();
-        taskTable.row();
+        this.add(taskList).expand().fill();
+        this.row();
 
         // Task Toolbar
         HorizontalGroup taskTools = new HorizontalGroup();
         TextButton addBtn = new TextButton("Add Task", skin, "small");
 
         taskTools.addActor(addBtn);
-        taskTable.add(taskTools).bottom().expandX();
-        taskTable.row();
+        this.add(taskTools).bottom().expandX();
+        this.row();
 
         // Add Button Functionality
         addBtn.addListener(new ChangeListener() {
@@ -169,8 +173,5 @@ public class TaskView {
                 popup.show(stage);
             }
         });
-
-
-        return taskTable;
     }
 }
