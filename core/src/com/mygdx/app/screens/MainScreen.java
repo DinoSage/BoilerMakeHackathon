@@ -10,6 +10,8 @@ import com.mygdx.app.Views.DashboardView;
 import com.mygdx.app.Views.SocialView;
 import com.mygdx.app.Views.TaskView;
 
+import java.util.Currency;
+
 public class MainScreen extends UIScreen {
 
     AppMain app;
@@ -19,16 +21,19 @@ public class MainScreen extends UIScreen {
     public static final int DASHBOARD_VIEW = 2;
     public static final int ACCOUNT_VIEW = 3;
 
+    public static int CURRENT_VIEW = -1;
+
     Table currentView;
 
     public MainScreen(AppMain appMain) {
         super(1000, 500);
         this.app = appMain;
-        this.currentView = new TaskView(stage);
+        CURRENT_VIEW = 0;
     }
 
     @Override
     protected void setup() {
+        updateView();
         final AssetStorage assets = AssetStorage.getInstance();
 
         // Load Skin
@@ -89,8 +94,26 @@ public class MainScreen extends UIScreen {
     }
 
     public void switchView(int view) {
+        CURRENT_VIEW = view;
         mainTable.clearChildren(true);
+        render = false;
         switch (view) {
+            case TASK_VIEW:
+                currentView = new TaskView(stage);
+                break;
+            case SOCIAL_VIEW:
+                currentView = new SocialView(stage);
+                break;
+            case DASHBOARD_VIEW:
+                render = true;
+                currentView = new DashboardView(stage);
+                break;
+        }
+        setup();
+    }
+
+    public void updateView() {
+        switch (CURRENT_VIEW) {
             case TASK_VIEW:
                 currentView = new TaskView(stage);
                 break;
@@ -101,7 +124,5 @@ public class MainScreen extends UIScreen {
                 currentView = new DashboardView(stage);
                 break;
         }
-
-        setup();
     }
 }

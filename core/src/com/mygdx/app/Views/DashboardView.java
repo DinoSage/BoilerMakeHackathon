@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.mygdx.app.AppConstants;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.Leaderboard;
+import com.mygdx.app.screens.MainScreen;
+import jdk.tools.jmod.Main;
 
 public class DashboardView extends Table {
 
