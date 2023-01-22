@@ -6,8 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.app.*;
+import com.mygdx.app.Views.DashboardView;
 import com.mygdx.app.Views.SocialView;
 import com.mygdx.app.Views.TaskView;
+
+import java.util.Currency;
 
 public class MainScreen extends UIScreen {
 
@@ -18,16 +21,20 @@ public class MainScreen extends UIScreen {
     public static final int DASHBOARD_VIEW = 2;
     public static final int ACCOUNT_VIEW = 3;
 
+
+    public static Label timeLabel;
+
     Table currentView;
 
     public MainScreen(AppMain appMain) {
         super(1000, 500);
         this.app = appMain;
-        this.currentView = new TaskView(stage);
+        currentView = new TaskView(stage);
     }
 
     @Override
     protected void setup() {
+        //updateView();
         final AssetStorage assets = AssetStorage.getInstance();
 
         // Load Skin
@@ -71,7 +78,7 @@ public class MainScreen extends UIScreen {
         dashboard.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("DASHBOARD");
+                switchView(DASHBOARD_VIEW);
             }
         });
 
@@ -89,6 +96,7 @@ public class MainScreen extends UIScreen {
 
     public void switchView(int view) {
         mainTable.clearChildren(true);
+        timeLabel = null;
         switch (view) {
             case TASK_VIEW:
                 currentView = new TaskView(stage);
@@ -96,8 +104,40 @@ public class MainScreen extends UIScreen {
             case SOCIAL_VIEW:
                 currentView = new SocialView(stage);
                 break;
+            case DASHBOARD_VIEW:
+                currentView = new DashboardView(stage);
+                break;
         }
-
         setup();
     }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        AssetStorage.getInstance().currentUser.refreshHours();
+
+        // Setup Time Tracker
+        double timeElapsed = AssetStorage.getInstance().currentUser.getHours();
+        int hours = (int) timeElapsed;
+        int minutes = (int) ((timeElapsed - hours) * 60);
+        int seconds = (int) (((timeElapsed - hours) * 60 - minutes) * 60);
+        if (timeLabel != null)
+            timeLabel.setText(String.format("%02d : %02d : %02d", hours, minutes, seconds));
+    }
+
+/*    public void updateView() {
+        switch (CURRENT_VIEW) {
+            case TASK_VIEW:
+                currentView = new TaskView(stage);
+                break;
+            case SOCIAL_VIEW:
+                currentView = new SocialView(stage);
+                break;
+            case DASHBOARD_VIEW:
+                currentView = new DashboardView(stage);
+                break;
+        }
+    }
+*/
 }
