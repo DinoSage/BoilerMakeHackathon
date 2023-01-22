@@ -184,11 +184,9 @@ class SocketServer {
 
         public ServerMessage refreshRequest(ServerMessage request) {
             User user = (User) request.getObject1();
-            boolean toggleProductivity = (boolean) request.getObject2();
             User sUser = serverEnvironment.getUser(user.getUsername());
-            if (toggleProductivity) {
-                sUser.toggleProductivity();
-            }
+            sUser.overrideUser(user);
+
             for (User cUser : serverEnvironment.getUsers()) {
                 cUser.refreshHours();
             }
