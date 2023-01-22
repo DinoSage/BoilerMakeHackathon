@@ -19,9 +19,15 @@ import java.util.ArrayList;
 public class AppMain extends Game {
 
 	AssetStorage assets;
-	Screen homeScreen;
-	Screen loginScreen;
-	Screen mainScreen;
+
+	public static final int HOME_SCREEN = 0;
+	HomeScreen homeScreen = null;
+
+	public static final int LOGIN_SCREEN = 1;
+	LoginScreen loginScreen = null;
+
+	public static final int MAIN_SCREEN = 2;
+	MainScreen mainScreen = null;
 
 	ServerMessage request;
 	ServerMessage response;
@@ -37,10 +43,7 @@ public class AppMain extends Game {
 		assets.startLoad();
 		Task.skin = assets.skin;
 
-		homeScreen = new HomeScreen();
-		loginScreen = new LoginScreen();
-		mainScreen = new MainScreen();
-
+		//switchScreen(1);
 
 		clientManager = new SocketClient();
 		//clientManager.testServerRequest();
@@ -75,9 +78,9 @@ public class AppMain extends Game {
 
 		user.setTasks(taskList);
 
-		assets.currentUser = user;
+		//assets.currentUser = user;
 
-		this.setScreen(mainScreen);
+		switchScreen(LOGIN_SCREEN);
 	}
 
 	@Override
@@ -90,6 +93,23 @@ public class AppMain extends Game {
 	@Override
 	public void dispose () {
 
+	}
+
+	public void switchScreen(int screen) {
+		switch (screen) {
+			case HOME_SCREEN:
+				homeScreen = new HomeScreen();
+				setScreen(homeScreen);
+				break;
+			case LOGIN_SCREEN:
+				loginScreen = new LoginScreen(this);
+				setScreen(loginScreen);
+				break;
+			case MAIN_SCREEN:
+				mainScreen = new MainScreen(this);
+				setScreen(mainScreen);
+				break;
+		}
 	}
 
 	public void testServerRequest() {

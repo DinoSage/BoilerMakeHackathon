@@ -28,7 +28,7 @@ public class SocialView {
 
             // Create Name Label
             Label usernameLabel = new Label(user.getUsername(), skin, "big");
-            Label numberOfHours = new Label(String.format("%.2f", 0f), skin, "big");
+            Label numberOfHours = new Label(String.format("%.2f", (float) user.getHours()), skin, "big");
             ProgressBar progress = new ProgressBar(0, leaderboard.getHoursPerStreak(), leaderboard.getHoursPerStreak() * .001f, false, skin);
             Label streakLabel  = new Label(String.valueOf(user.getStreakCounter()), skin, "big");
             //Image crown = new Image();
