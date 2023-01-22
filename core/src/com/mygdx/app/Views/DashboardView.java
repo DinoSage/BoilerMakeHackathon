@@ -23,7 +23,16 @@ public class DashboardView extends Table {
         TextButton endBtn = new TextButton("End", skin, "small");
         Label streakLabel = new Label("Streak Count", skin, "big");
         Label streakNum  = new Label(String.valueOf(assets.currentUser.getStreakCounter()), skin, "big");
-        Label time = new Label(String.valueOf(assets.currentUser.elapsedTimeHours()), skin, "big");
+
+        // Setup Time Tracker
+        double timeElapsed = assets.currentUser.elapsedTimeHours();
+        int hours = (int) timeElapsed;
+        int minutes = (int) ((timeElapsed - hours) * 60);
+        int seconds = (int) (((timeElapsed - hours) * 60 - minutes) * 60);
+        String timeLabel = String.format("%02d : %02d : %02d", hours, minutes, seconds);
+        Label time = new Label(timeLabel, skin, "big");
+
+        System.out.println("Time:" +  assets.currentUser.elapsedTimeHours());
 
         this.add(progress).colspan(3).fill().expandX();
         this.row();
