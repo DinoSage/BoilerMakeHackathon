@@ -16,8 +16,6 @@ public abstract class UIScreen implements Screen {
     protected Stage stage;
     protected Table mainTable;
 
-    public boolean render;
-
     protected UIScreen(float minWorldWidth, float minWorldHeight){
         camera = new OrthographicCamera();
         //viewport = new ScreenViewport(camera);
@@ -42,10 +40,6 @@ public abstract class UIScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (render) {
-            mainTable.clearChildren(true);
-            setup();
-        }
         camera.update();
         stage.act(delta);
         stage.draw();

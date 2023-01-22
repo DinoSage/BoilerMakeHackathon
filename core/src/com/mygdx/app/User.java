@@ -23,6 +23,8 @@ public class User implements Serializable {
     private long productivityStart = 0;
     private int streakCounter;
 
+    private boolean timeTracking = false;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
@@ -177,6 +179,18 @@ public class User implements Serializable {
             hours += productivityDuration / 3600000;
             productivityStart = System.currentTimeMillis();
         }
+    }
+
+    public void startTrackingTime() {
+        if (!timeTracking) {
+            timeTracking = true;
+            hours = 0;
+        }
+    }
+
+    public void stopTrackingTime() {
+        if (timeTracking)
+            timeTracking = false;
     }
 
     public long getProductivityStart() {

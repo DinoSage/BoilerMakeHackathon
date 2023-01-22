@@ -1,7 +1,9 @@
 package com.mygdx.app.Views;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.app.AppConstants;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.Leaderboard;
@@ -25,7 +27,7 @@ public class DashboardView extends Table {
         Label streakNum  = new Label(String.valueOf(assets.currentUser.getStreakCounter()), skin, "big");
 
         // Setup Time Tracker
-        double timeElapsed = assets.currentUser.elapsedTimeHours();
+        double timeElapsed = assets.currentUser.getHours();
         int hours = (int) timeElapsed;
         int minutes = (int) ((timeElapsed - hours) * 60);
         int seconds = (int) (((timeElapsed - hours) * 60 - minutes) * 60);
@@ -42,6 +44,25 @@ public class DashboardView extends Table {
         this.add(endBtn).expandX();
         this.add(streakLabel).expandX();
         this.add(streakNum).expandX();
+
+        MainScreen.timeLabel = time;
+
+        // Button Functionality
+        startBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (!assets.currentUser.isProductive())
+                    assets.currentUser.toggleProductivity();
+            }
+        });
+
+        endBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (assets.currentUser.isProductive())
+                assets.currentUser.toggleProductivity();
+            }
+        });
     }
 
 

@@ -21,19 +21,19 @@ public class MainScreen extends UIScreen {
     public static final int DASHBOARD_VIEW = 2;
     public static final int ACCOUNT_VIEW = 3;
 
-    public static int CURRENT_VIEW = -1;
+
+    public static Label timeLabel;
 
     Table currentView;
 
     public MainScreen(AppMain appMain) {
         super(1000, 500);
         this.app = appMain;
-        CURRENT_VIEW = 0;
     }
 
     @Override
     protected void setup() {
-        updateView();
+        //updateView();
         final AssetStorage assets = AssetStorage.getInstance();
 
         // Load Skin
@@ -94,9 +94,8 @@ public class MainScreen extends UIScreen {
     }
 
     public void switchView(int view) {
-        CURRENT_VIEW = view;
         mainTable.clearChildren(true);
-        render = false;
+        timeLabel = null;
         switch (view) {
             case TASK_VIEW:
                 currentView = new TaskView(stage);
@@ -105,14 +104,28 @@ public class MainScreen extends UIScreen {
                 currentView = new SocialView(stage);
                 break;
             case DASHBOARD_VIEW:
-                render = true;
                 currentView = new DashboardView(stage);
                 break;
         }
         setup();
     }
 
-    public void updateView() {
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        AssetStorage.getInstance().currentUser.refreshHours();
+
+        // Setup Time Tracker
+        double timeElapsed = AssetStorage.getInstance().currentUser.getHours();
+        int hours = (int) timeElapsed;
+        int minutes = (int) ((timeElapsed - hours) * 60);
+        int seconds = (int) (((timeElapsed - hours) * 60 - minutes) * 60);
+        if (timeLabel != null)
+            timeLabel.setText(String.format("%02d : %02d : %02d", hours, minutes, seconds));
+    }
+
+/*    public void updateView() {
         switch (CURRENT_VIEW) {
             case TASK_VIEW:
                 currentView = new TaskView(stage);
@@ -125,4 +138,5 @@ public class MainScreen extends UIScreen {
                 break;
         }
     }
+*/
 }
