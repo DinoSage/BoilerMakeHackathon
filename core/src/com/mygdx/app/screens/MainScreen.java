@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.app.AppConstants;
 import com.mygdx.app.AssetStorage;
@@ -52,6 +53,7 @@ public class MainScreen extends UIScreen {
         mainTable.add(toolbar).top();
         mainTable.row();
         mainTable.add(taskTable).expand().fill();
+        mainTable.row();
 
         final List taskList = new List(skin) {
 
@@ -67,7 +69,7 @@ public class MainScreen extends UIScreen {
                 // Create Popup Window
                 final Dialog popup = new Dialog("Edit Task", skin);
 
-                popup.setDebug(true);
+                popup.setDebug(AppConstants.DEBUG);
 
                 // Edit Task Label
                 Label edit = new Label("Editing Task", skin);
@@ -134,9 +136,72 @@ public class MainScreen extends UIScreen {
         });
 
         taskTable.add(taskList).expand().fill();
+        taskTable.row();
 
-        // Add UI Functionality
+        // Task Toolbar
+        HorizontalGroup taskTools = new HorizontalGroup();
+        TextButton addBtn = new TextButton("Add Task", skin, "small");
 
+        taskTools.addActor(addBtn);
+        taskTable.add(taskTools).bottom().expandX();
+        taskTable.row();
+
+        // Add Button Functionality
+        addBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                // Create Dialog popup
+                final Dialog popup = new Dialog("Add Task", skin);
+
+                popup.setDebug(AppConstants.DEBUG);
+
+                // Label for Task Name
+                Label nameLabel = new Label("Task Name:", skin, "black");
+                nameLabel.setAlignment(Align.left, Align.left);
+
+                // Task Name Input
+                final TextField input = new TextField("", skin);
+
+                // Buttons
+                TextButton addBtn = new TextButton("Add", skin, "small");
+                TextButton closeBtn = new TextButton("Close", skin, "small");
+
+                // Add to Popup
+                popup.add(nameLabel).colspan(2).expandX();
+                popup.row();
+                popup.add(input).colspan(2).expandX().fillX();
+                popup.row();
+                popup.add(addBtn);
+                popup.add(closeBtn);
+                popup.row();
+
+
+                // Button Functionality
+                closeBtn.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        popup.hide();
+                    }
+                });
+
+                addBtn.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        // Define new task
+                        Task newTask = new Task(input.getText(), false);
+                        assets.currentUser.getTasks().add(newTask);
+
+                        // Refresh List
+                        taskList.clearItems();
+                        taskList.setItems(assets.currentUser.getTasks());
+                        popup.hide();
+                    }
+                });
+
+                // Show popup
+                popup.show(stage);
+            }
+        });
 
     }
 }
