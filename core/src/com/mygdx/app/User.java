@@ -11,7 +11,7 @@ public class User implements Serializable {
     private String username;
     private String password;
     private final long start;
-    private int points;
+    private double hours;
     private int percentTaskCompleted;
 
     private Leaderboard leaderboard;
@@ -28,21 +28,21 @@ public class User implements Serializable {
         //this.tasks = new Array<>();
         this.tasks = new SArray<>();
         this.percentTaskCompleted = 0;
-        this.points = 0;
+        this.hours = 0.0;
         this.streakCounter = 0;
         start = System.currentTimeMillis();
 
         this.leaderboard = new Leaderboard(this);
     }
 
-    public User(String username, String password, int hours, int percentTaskCompleted, int points, SArray<Task> tasks, int streakCounter) {
+    public User(String username, String password, double hours, int percentTaskCompleted, SArray<Task> tasks, int streakCounter) {
         this.username = username;
         this.password = password;
 
         //this.tasks = tasks;
         this.tasks = tasks;
         this.percentTaskCompleted = percentTaskCompleted;
-        this.points = points;
+        this.hours = hours;
         this.streakCounter = streakCounter;
         start = System.currentTimeMillis();
 
@@ -50,11 +50,11 @@ public class User implements Serializable {
 
     }
 
-    public User(int hours, int percentTaskCompleted, int points, SArray<Task> tasks, int streakCounter) {
+    public User(int percentTaskCompleted, double hours, SArray<Task> tasks, int streakCounter) {
         //this.tasks = tasks;
         this.tasks = tasks;
         this.percentTaskCompleted = percentTaskCompleted;
-        this.points = points;
+        this.hours = hours;
         this.streakCounter = streakCounter;
         start = System.currentTimeMillis();
 
@@ -78,12 +78,12 @@ public class User implements Serializable {
         this.percentTaskCompleted = percentTaskCompleted;
     }
 
-    public int getPoints() {
-        return points;
+    public double getHours() {
+        return hours;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setHours(double hours) {
+        this.hours = hours;
     }
 
     public double elapsedTimeHours() {
@@ -124,12 +124,12 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        return start == this.start && points == this.points && percentTaskCompleted == this.percentTaskCompleted && streakCounter == this.streakCounter;
+        return start == this.start && hours == this.hours && percentTaskCompleted == this.percentTaskCompleted && streakCounter == this.streakCounter;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(start, points, percentTaskCompleted, tasks, streakCounter);
+        return Objects.hash(start, hours, percentTaskCompleted, tasks, streakCounter);
     }
 
     public String getUsername() {
