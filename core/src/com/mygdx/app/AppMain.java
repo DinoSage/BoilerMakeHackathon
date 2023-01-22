@@ -44,6 +44,8 @@ public class AppMain extends Game {
 		clientManager = new SocketClient();
 		//clientManager.testServerRequest();
 		clientManager.loginRequest("Nareynater", "password");
+		User nathan = new User("Nareynater", "password");
+		SArray<User> serverUsers = clientManager.refreshRequest(nathan);
 		//testServerRequest();
 
 		// Dummy User w/ Dummy Tasks
