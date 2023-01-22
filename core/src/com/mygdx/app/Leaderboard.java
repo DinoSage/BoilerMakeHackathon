@@ -38,4 +38,6 @@ public class Leaderboard implements Serializable {
     public void setCreator(User creator) {
         this.creator = creator;
     }
+
+
 }
