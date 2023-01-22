@@ -55,9 +55,9 @@ public class LoginScreen extends UIScreen {
         loginBtn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                User user = new User(emailInput.getText(), passwordInput.getText());
+                User user = app.clientManager.loginRequest(emailInput.getText(), passwordInput.getText());
                 AssetStorage.getInstance().currentUser = user;
-                app.clientManager.loginRequest(user.getUsername(), user.getPassword());
+
                 app.switchScreen(AppMain.MAIN_SCREEN);
             }
         });

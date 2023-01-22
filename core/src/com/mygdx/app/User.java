@@ -188,6 +188,11 @@ public class User implements Serializable {
     //}
 
     public void overrideUser(User user) {
+        System.out.println("Old UserName: "+ this.username);
+        System.out.println("Old Size: "+ this.getTasks().size);
+        System.out.println("New UserName: "+ user.username);
+        System.out.println("New Size:" + user.getTasks().size);
+
         this.username = user.getUsername();
         this.password = user.getPassword();
         //this.start = start;

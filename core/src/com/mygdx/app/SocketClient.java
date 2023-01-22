@@ -49,6 +49,8 @@ public class SocketClient {
     }
 
     public SArray<User> refreshRequest(User user) {
+        System.out.println("New UserName: "+ user.getUsername());
+        System.out.println("New Size:" + user.getTasks().size);
         ServerMessage response = sendServerRequest(new ServerMessage("RefreshRequest", user));
         return (SArray<User>) response.getObject3();
     }
