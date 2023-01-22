@@ -14,19 +14,28 @@ import com.mygdx.app.screens.MainScreen;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class AppMain extends Game {
 
+	public static AppMain instance;
+
 	AssetStorage assets;
-	Screen homeScreen;
-	Screen loginScreen;
-	Screen mainScreen;
+
+	public static final int HOME_SCREEN = 0;
+	HomeScreen homeScreen = null;
+
+	public static final int LOGIN_SCREEN = 1;
+	LoginScreen loginScreen = null;
+
+	public static final int MAIN_SCREEN = 2;
+	MainScreen mainScreen = null;
 
 	ServerMessage request;
 	ServerMessage response;
 	ObjectOutputStream clientOut;
 	ObjectInputStream serverIn;
-	SocketClient clientManager;
+	public SocketClient clientManager;
 
 	@Override
 	public void create () {
@@ -36,20 +45,29 @@ public class AppMain extends Game {
 		assets.startLoad();
 		Task.skin = assets.skin;
 
-		homeScreen = new HomeScreen();
-		loginScreen = new LoginScreen();
-		mainScreen = new MainScreen();
-
+		//switchScreen(1);
 
 		clientManager = new SocketClient();
 		//clientManager.testServerRequest();
-		clientManager.loginRequest("Nareynater", "password");
-		User nathan = new User("Nareynater", "password");
-		SArray<User> serverUsers = clientManager.refreshRequest(nathan);
+		//clientManager.loginRequest("Nareynater", "password");
 		//testServerRequest();
 
 		// Dummy User w/ Dummy Tasks
 		User user = new User("user1", "passy");
+		ArrayList<User> users = new ArrayList<>();
+		users.add(user);
+
+		Leaderboard tempBoard = new Leaderboard(user);
+		tempBoard.setHoursPerStreak(4);
+		user.setLeaderboard(tempBoard);
+
+		for (int i = 0; i < 3; i++) {
+			User tempUser = new User("user" + i, "passy");
+			tempUser.setLeaderboard(tempBoard);
+			users.add(tempUser);
+		}
+
+		tempBoard.setUsers(users);
 
 		//Array<Task> taskList = new Array<>();
 		SArray<Task> taskList = new SArray<>();
@@ -62,9 +80,9 @@ public class AppMain extends Game {
 
 		user.setTasks(taskList);
 
-		assets.currentUser = user;
+		//assets.currentUser = user;
 
-		this.setScreen(mainScreen);
+		switchScreen(LOGIN_SCREEN);
 	}
 
 	@Override
@@ -77,6 +95,23 @@ public class AppMain extends Game {
 	@Override
 	public void dispose () {
 
+	}
+
+	public void switchScreen(int screen) {
+		switch (screen) {
+			case HOME_SCREEN:
+				homeScreen = new HomeScreen();
+				setScreen(homeScreen);
+				break;
+			case LOGIN_SCREEN:
+				loginScreen = new LoginScreen(this);
+				setScreen(loginScreen);
+				break;
+			case MAIN_SCREEN:
+				mainScreen = new MainScreen(this);
+				setScreen(mainScreen);
+				break;
+		}
 	}
 
 	public void testServerRequest() {

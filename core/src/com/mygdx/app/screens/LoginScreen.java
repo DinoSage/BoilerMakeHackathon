@@ -1,18 +1,25 @@
 package com.mygdx.app.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.mygdx.app.AppMain;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.UIScreen;
+import com.mygdx.app.User;
 
 public class LoginScreen extends UIScreen {
 
+    AppMain app;
+
     // Constructor
-    public LoginScreen() {
+    public LoginScreen(AppMain app) {
         super(1000, 500);
+        this.app = app;
     }
     @Override
     protected void setup() {
@@ -24,11 +31,11 @@ public class LoginScreen extends UIScreen {
 
         // Email
         Label emailLabel= new Label("Email: ", skin);
-        TextField emailInput = new TextField("", skin);
+        final TextField emailInput = new TextField("", skin);
 
         // Password
         Label passwordLabel= new Label("Password: ", skin);
-        TextField passwordInput = new TextField("", skin);
+        final TextField passwordInput = new TextField("", skin);
 
         mainTable.add(title).colspan(2);
         mainTable.row();
@@ -45,7 +52,14 @@ public class LoginScreen extends UIScreen {
         mainTable.row();
         mainTable.add(loginBtn).colspan(2).prefSize(title.getPrefWidth(), title.getPrefHeight());
 
-        // Add UI Functionality
-
+        loginBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                User user = new User(emailInput.getText(), passwordInput.getText());
+                AssetStorage.getInstance().currentUser = user;
+                app.clientManager.loginRequest(user.getUsername(), user.getPassword());
+                app.switchScreen(AppMain.MAIN_SCREEN);
+            }
+        });
     }
 }
