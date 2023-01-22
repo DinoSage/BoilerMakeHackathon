@@ -1,11 +1,15 @@
 package com.mygdx.app.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.app.UIScreen;
+
+import javax.swing.event.ChangeEvent;
 
 public class LoginScreen extends UIScreen {
 
@@ -23,11 +27,11 @@ public class LoginScreen extends UIScreen {
 
         // Email
         Label emailLabel= new Label("Email: ", skin);
-        TextField emailInput = new TextField("", skin);
+        final TextField emailInput = new TextField("", skin);
 
         // Password
         Label passwordLabel= new Label("Password: ", skin);
-        TextField passwordInput = new TextField("", skin);
+        final TextField passwordInput = new TextField("", skin);
 
         mainTable.add(title).colspan(2);
         mainTable.row();
@@ -39,9 +43,18 @@ public class LoginScreen extends UIScreen {
         mainTable.add(passwordInput).expandX().fillX().uniform();
 
         // Add Buttons
-        TextButton loginBtn = new TextButton("Login In", skin);
+        final TextButton loginBtn = new TextButton("Login In", skin);
         loginBtn.setStyle(skin.get("small", TextButton.TextButtonStyle.class));
         mainTable.row();
         mainTable.add(loginBtn).colspan(2).prefSize(title.getPrefWidth(), title.getPrefHeight());
+
+        loginBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                emailInput.getText();
+                passwordInput.getText();
+            }
+        });
     }
+
 }

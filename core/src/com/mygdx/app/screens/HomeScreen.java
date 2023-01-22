@@ -28,7 +28,7 @@ public class HomeScreen extends UIScreen {
         label.setAlignment(Align.center);
         //label.setStyle(skin.get("big", Label.LabelStyle.class));
 
-        label.setColor(Color.WHITE);
+        label.setColor(Color.GREEN);
 
         mainTable.add(label);
     }
