@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.app.screens.HomeScreen;
 import com.mygdx.app.screens.LoginScreen;
@@ -27,25 +28,40 @@ public class AppMain extends Game {
 	ObjectInputStream serverIn;
 	SocketClient clientManager;
 
-	User user;
-
 	@Override
 	public void create () {
 
 		// Create Asset Storage
 		assets = AssetStorage.getInstance();
 		assets.startLoad();
+		Task.skin = assets.skin;
 
 		homeScreen = new HomeScreen();
 		loginScreen = new LoginScreen();
 		mainScreen = new MainScreen();
-		this.setScreen(mainScreen);
 
 
 		clientManager = new SocketClient();
 		//clientManager.testServerRequest();
 		clientManager.loginRequest("Nareynater", "password");
 		//testServerRequest();
+
+		// Dummy User w/ Dummy Tasks
+		User user = new User("user1", "passy");
+
+		Array<Task> taskList = new Array<>();
+		for (int i = 0; i < 20; i++) {
+			String name = "Task#" + i;
+			Task task = new Task(name, false);
+
+			taskList.add(task);
+		}
+
+		user.setTasks(taskList);
+
+		assets.currentUser = user;
+
+		this.setScreen(mainScreen);
 	}
 
 	@Override
@@ -53,9 +69,6 @@ public class AppMain extends Game {
 		ScreenUtils.clear(.2f, .2f, .2f, 1);
 		assets.render();
 		super.render();
-		/*batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();*/
 	}
 	
 	@Override

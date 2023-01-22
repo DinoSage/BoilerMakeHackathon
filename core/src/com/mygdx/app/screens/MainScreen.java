@@ -1,18 +1,18 @@
 package com.mygdx.app.screens;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.app.AppConstants;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.Task;
 import com.mygdx.app.UIScreen;
-import org.w3c.dom.Text;
 
 public class MainScreen extends UIScreen {
 
@@ -22,6 +22,8 @@ public class MainScreen extends UIScreen {
 
     @Override
     protected void setup() {
+        final AssetStorage assets = AssetStorage.getInstance();
+
         // Load Skin
         final Skin skin = AssetStorage.getInstance().skin;
 
@@ -51,54 +53,19 @@ public class MainScreen extends UIScreen {
         mainTable.row();
         mainTable.add(taskTable).expand().fill();
 
-        final List taskList = new List(skin);
+        final List taskList = new List(skin) {
 
-        Task.skin = skin;
-        Array<Task> taskArray = new Array<>();
-        for (int i = 0; i < 10; i ++) {
-            final Task task = new Task("hello", false);
-
-            task.addListener(new ChangeListener() {
-                @Override
-                public void changed(ChangeEvent event, Actor actor) {
-                    Dialog popup = new Dialog("Edit Task", skin);
-
-                    // Edit Task Label
-                    Label edit = new Label("Editing Task", skin);
-                    popup.text(edit);
-
-                    // Task name field
-                    TextField text = new TextField(task.getName(), skin);
-                    popup.add(text).colspan(2);
-                    popup.row();
-
-                    // Buttons
-                    TextButton editBtn = new TextButton("Edit", skin);
-                    TextButton deleteBtn = new TextButton("Delete", skin);
-                    CheckBox complete = new CheckBox("Complete?", skin);
-
-                    popup.add(complete);
-                    popup.add(editBtn);
-                    popup.row();
-                    popup.add(deleteBtn).colspan(2);
-
-                    popup.show(stage);
-                }
-            });
-
-            taskArray.add(task);
-        }
-
-        taskList.setItems(taskArray);
+        };
+        taskList.setItems(assets.currentUser.getTasks());
 
         taskList.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Task task = (Task) taskList.getSelected();
+
+                final Task task = (Task) taskList.getSelected();
 
                 // Create Popup Window
-                System.out.println("List Clicked!");
-                Dialog popup = new Dialog("Edit Task", skin);
+                final Dialog popup = new Dialog("Edit Task", skin);
 
                 popup.setDebug(true);
 
@@ -108,7 +75,7 @@ public class MainScreen extends UIScreen {
                 popup.row();
 
                 // Task name field
-                TextField text = new TextField(task.getName(), skin);
+                final TextField text = new TextField(task.getName(), skin);
                 popup.add(text).colspan(2).expandX().fillX();
                 popup.row();
 
@@ -120,7 +87,8 @@ public class MainScreen extends UIScreen {
                 Table completeTable = new Table();
                 completeTable.setDebug(AppConstants.DEBUG);
                 Label completeLabel = new Label("Complete?", skin);
-                CheckBox complete = new CheckBox("", skin);
+                final CheckBox complete = new CheckBox("", skin);
+                complete.setChecked(task.isTaskComplete());
 
                 popup.add(editBtn);
                 popup.add(complete);
@@ -129,6 +97,39 @@ public class MainScreen extends UIScreen {
                 popup.add(closeBtn);
 
                 popup.show(stage);
+
+                // Button Functionality
+                editBtn.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        task.setComplete(complete.isChecked());
+                        task.setName(text.getText());
+
+                        if (complete.isChecked()) {
+                            boolean success = assets.currentUser.getTasks().removeValue(task, false);
+                            taskList.clearItems();
+                            taskList.setItems(assets.currentUser.getTasks());
+                        }
+                        popup.hide();
+                    }
+                });
+
+                deleteBtn.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        boolean success = assets.currentUser.getTasks().removeValue(task, false);
+                        taskList.clearItems();
+                        taskList.setItems(assets.currentUser.getTasks());
+                        popup.hide();
+                    }
+                });
+
+                closeBtn.addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
+                        popup.hide();
+                    }
+                });
             }
         });
 

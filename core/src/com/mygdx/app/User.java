@@ -1,5 +1,7 @@
 package com.mygdx.app;
 
+import com.badlogic.gdx.utils.Array;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -12,7 +14,7 @@ public class User implements Serializable {
     private int points;
     private int percentTaskCompleted;
 
-    private ArrayList<Task> tasks;
+    private Array<Task> tasks;
 
     private int streakCounter;
 
@@ -20,14 +22,14 @@ public class User implements Serializable {
         this.username = username;
         this.password = password;
 
-        this.tasks = new ArrayList<>();
+        this.tasks = new Array<>();
         this.percentTaskCompleted = 0;
         this.points = 0;
         this.streakCounter = 0;
         start = System.currentTimeMillis();
     }
 
-    public User(String username, String password, int hours, int percentTaskCompleted, int points, ArrayList<Task> tasks, int streakCounter) {
+    public User(String username, String password, int hours, int percentTaskCompleted, int points, Array<Task> tasks, int streakCounter) {
         this.username = username;
         this.password = password;
 
@@ -39,7 +41,7 @@ public class User implements Serializable {
 
     }
 
-    public User(int hours, int percentTaskCompleted, int points, ArrayList<Task> tasks, int streakCounter) {
+    public User(int hours, int percentTaskCompleted, int points, Array<Task> tasks, int streakCounter) {
         this.tasks = tasks;
         this.percentTaskCompleted = percentTaskCompleted;
         this.points = points;
@@ -77,27 +79,27 @@ public class User implements Serializable {
         return (now - start) / (60.0 * 60.0 * 1000.0);
     }
 
-    public ArrayList<Task> getTasks() {
+    public Array<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(ArrayList<Task> tasks) {
+    public void setTasks(Array<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public ArrayList<Task> updateTasks(Task task) {
+    public Array<Task> updateTasks(Task task) {
         tasks.add(task);
         return tasks;
     }
 
-    public int getNumberOfTasks(ArrayList<Task> tasks) {
-        return tasks.size();
+    public int getNumberOfTasks(Array<Task> tasks) {
+        return tasks.size;
     }
 
-    public int getNumberOfTasksCompleted(ArrayList<Task> tasks) {
+    public int getNumberOfTasksCompleted(Array<Task> tasks) {
         int counter = 0;
 
-        for (int i = 0; i < tasks.size(); i++) {
+        for (int i = 0; i < tasks.size; i++) {
             if (tasks.get(i).isTaskComplete()) {
                 counter++;
             }
