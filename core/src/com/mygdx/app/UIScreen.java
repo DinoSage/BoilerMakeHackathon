@@ -24,7 +24,7 @@ public abstract class UIScreen implements Screen {
         mainTable = new Table();
         stage.addActor(mainTable);
         mainTable.setFillParent(true);
-        mainTable.setDebug(true);
+        mainTable.setDebug(AppConstants.DEBUG);
 
         //viewport.setWorldSize(20, 20);
         //camera.position.set(0, 0, 0);
