@@ -29,6 +29,7 @@ public class MainScreen extends UIScreen {
     public MainScreen(AppMain appMain) {
         super(1000, 500);
         this.app = appMain;
+        currentView = new TaskView(stage);
     }
 
     @Override
