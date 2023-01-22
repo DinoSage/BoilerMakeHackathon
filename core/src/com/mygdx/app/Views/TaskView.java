@@ -131,6 +131,8 @@ public class TaskView extends Table {
                     @Override
                     public void hide(){
                         super.hide();
+                        System.out.println("New UserName: "+ assets.currentUser.getUsername());
+                        System.out.println("New Size:" + assets.currentUser.getTasks().size);
                         AppMain.instance.clientManager.refreshRequest(assets.currentUser);
                     }
                 };
