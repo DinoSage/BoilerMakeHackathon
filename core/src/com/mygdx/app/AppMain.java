@@ -40,6 +40,8 @@ public class AppMain extends Game {
 	@Override
 	public void create () {
 
+		instance = this;
+
 		// Create Asset Storage
 		assets = AssetStorage.getInstance();
 		assets.startLoad();

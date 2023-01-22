@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
 import com.mygdx.app.AppConstants;
+import com.mygdx.app.AppMain;
 import com.mygdx.app.AssetStorage;
 import com.mygdx.app.Task;
 
@@ -21,8 +22,6 @@ public class TaskView extends Table {
 
         // Create Table for Task View
         this.setDebug(true);
-
-
 
         final List taskList = new List(skin);
         taskList.setItems(assets.currentUser.getTasks());
@@ -38,7 +37,13 @@ public class TaskView extends Table {
                 final Task task = (Task) taskList.getSelected();
 
                 // Create Popup Window
-                final Dialog popup = new Dialog("Edit Task", skin);
+                final Dialog popup = new Dialog("Edit Task", skin) {
+                    @Override
+                    public void hide(){
+                        super.hide();
+                        AppMain.instance.clientManager.refreshRequest(assets.currentUser);
+                    }
+                };
 
                 popup.setDebug(AppConstants.DEBUG);
 
@@ -122,7 +127,13 @@ public class TaskView extends Table {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 // Create Dialog popup
-                final Dialog popup = new Dialog("Add Task", skin);
+                final Dialog popup = new Dialog("Add Task", skin) {
+                    @Override
+                    public void hide(){
+                        super.hide();
+                        AppMain.instance.clientManager.refreshRequest(assets.currentUser);
+                    }
+                };
 
                 popup.setDebug(AppConstants.DEBUG);
 
