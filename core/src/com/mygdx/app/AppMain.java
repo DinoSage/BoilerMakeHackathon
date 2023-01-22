@@ -39,7 +39,7 @@ public class AppMain extends Game {
 		homeScreen = new HomeScreen();
 		loginScreen = new LoginScreen();
 		mainScreen = new MainScreen();
-		this.setScreen(loginScreen);
+		this.setScreen(mainScreen);
 
 
 		clientManager = new SocketClient();
