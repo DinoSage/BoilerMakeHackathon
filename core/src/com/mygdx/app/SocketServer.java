@@ -187,9 +187,12 @@ class SocketServer {
             User sUser = serverEnvironment.getUser(user.getUsername());
             sUser.overrideUser(user);
 
+            String res = "refreshed User: " + sUser.getUsername() + " | All Users: ";
             for (User cUser : serverEnvironment.getUsers()) {
                 cUser.refreshHours();
+                res = res + cUser.getUsername() + ", ";
             }
+            request.setResponse(res);
             request.setObject3(serverEnvironment.getUsers());
             return request;
         }
