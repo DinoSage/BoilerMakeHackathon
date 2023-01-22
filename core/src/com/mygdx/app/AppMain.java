@@ -14,6 +14,7 @@ import com.mygdx.app.screens.MainScreen;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class AppMain extends Game {
 
@@ -48,6 +49,20 @@ public class AppMain extends Game {
 
 		// Dummy User w/ Dummy Tasks
 		User user = new User("user1", "passy");
+		ArrayList<User> users = new ArrayList<>();
+		users.add(user);
+
+		Leaderboard tempBoard = new Leaderboard(user);
+		tempBoard.setHoursPerStreak(4);
+		user.setLeaderboard(tempBoard);
+
+		for (int i = 0; i < 3; i++) {
+			User tempUser = new User("user" + i, "passy");
+			tempUser.setLeaderboard(tempBoard);
+			users.add(tempUser);
+		}
+
+		tempBoard.setUsers(users);
 
 		Array<Task> taskList = new Array<>();
 		for (int i = 0; i < 20; i++) {
