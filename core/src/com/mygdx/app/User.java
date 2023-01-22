@@ -12,6 +12,8 @@ public class User implements Serializable {
     private int points;
     private int percentTaskCompleted;
 
+    private Leaderboard leaderboard;
+
     private ArrayList<Task> tasks;
 
     private int streakCounter;
@@ -25,6 +27,8 @@ public class User implements Serializable {
         this.points = 0;
         this.streakCounter = 0;
         start = System.currentTimeMillis();
+
+        this.leaderboard = new Leaderboard(this);
     }
 
     public User(String username, String password, int hours, int percentTaskCompleted, int points, ArrayList<Task> tasks, int streakCounter) {
@@ -37,6 +41,8 @@ public class User implements Serializable {
         this.streakCounter = streakCounter;
         start = System.currentTimeMillis();
 
+        this.leaderboard = new Leaderboard(this);
+
     }
 
     public User(int hours, int percentTaskCompleted, int points, ArrayList<Task> tasks, int streakCounter) {
@@ -45,6 +51,8 @@ public class User implements Serializable {
         this.points = points;
         this.streakCounter = streakCounter;
         start = System.currentTimeMillis();
+
+        this.leaderboard = new Leaderboard(this);
 
     }
 
@@ -130,5 +138,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Leaderboard getLeaderboard() {
+        return leaderboard;
+    }
+
+    public void setLeaderboard(Leaderboard leaderboard) {
+        this.leaderboard = leaderboard;
     }
 }

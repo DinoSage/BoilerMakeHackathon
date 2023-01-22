@@ -15,8 +15,18 @@ class SocketServer {
         try {
             // server is listening on port 9999
             //server = new ServerSocket(9999);
+
+            InetAddress inet = InetAddress.getLocalHost();
+            String host = inet.getHostName();
+            System.out.println("Local Host: " + inet);
+            System.out.println("Host Name: " + host);
+
             server = new ServerSocket();
-            server.bind(new InetSocketAddress("10.184.46.131", 9999));
+            //server.bind(new InetSocketAddress("128.210.107.129", 9999));
+
+            //server.bind(new InetSocketAddress("localhost", 9999));
+            server.bind(new InetSocketAddress("localhost", 9999));
+            //server.bind(new InetSocketAddress("172.20.10.2", 9999));
             server.setReuseAddress(true);
 
             // running infinite loop for getting
@@ -82,14 +92,14 @@ class SocketServer {
 
                         case ("TestRequest"):
                             message = testRequest(message);
-                            //serverOut.writeObject(message);
-                            //serverOut.flush();
                             break;
 
                         case ("LoginRequest"):
                             message = loginRequest(message);
-                            //serverOut.writeObject(message);
-                            //serverOut.flush();
+                            break;
+
+                        case ("JoinLeaderboardRequest"):
+                            message = joinLeaderboardRequest(message);
                             break;
 
                         default:
@@ -149,6 +159,22 @@ class SocketServer {
 
             System.out.println("Logged in: " + serverEnvironment.getUser(username).getUsername());
 
+            return request;
+        }
+
+        public ServerMessage joinLeaderboardRequest(ServerMessage request) {
+            System.out.println("Join Leaderboard request found:\n     user: " + ((User) request.getObject1()).getUsername() + "    crtr: " + request.getObject2()); //Test
+            User user = (User) request.getObject1();
+            String username = (String) request.getObject2();
+
+            User creator = serverEnvironment.getUser(username);
+            request.setResponse("Leaderboard not found");
+            if (!(creator == null)) {
+                creator.getLeaderboard().addUser(user);
+                user.getLeaderboard().removeUser(user);
+                user.setLeaderboard(creator.getLeaderboard());
+                request.setResponse("Joined new Leaderboard");
+            }
             return request;
         }
     }

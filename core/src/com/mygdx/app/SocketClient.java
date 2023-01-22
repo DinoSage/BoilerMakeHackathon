@@ -11,17 +11,16 @@ public class SocketClient {
     ObjectOutputStream clientOut;
     ObjectInputStream serverIn;
 
-    public SocketClient() { }
-
-
-
+    public SocketClient() {
+    }
 
 
     public void testServerRequest() {
         //Search for server host
         System.out.println("Searching for server");
+        //try (Socket socket = new Socket("10.184.78.33", 9999)) {
+        //try (Socket socket = new Socket("10.184.78.33", 9999)) {
         try (Socket socket = new Socket("10.184.46.131", 9999)) {
-            //try (Socket socket = new Socket("10.184.46.131", 9999)) {
             System.out.println("Connected to server");
 
             //Server Input and Output Streams
@@ -44,12 +43,20 @@ public class SocketClient {
         ServerMessage response = sendServerRequest(new ServerMessage("LoginRequest", username, password));
     }
 
+    public void joinLeaderboardRequest(User user, String username) {
+        ServerMessage response = sendServerRequest(new ServerMessage("JoinLeaderboardRequest", user, username));
+    }
+
+    public void toggleProductivityRequest(User user, String username) {
+        ServerMessage response = sendServerRequest(new ServerMessage("ToggleProductivityRequest", user, username));
+    }
+
 
     private ServerMessage sendServerRequest(ServerMessage message) {
         //Search for server host
         System.out.println("Searching for server");
-        try (Socket socket = new Socket("10.184.46.131", 9999)) {
-            //try (Socket socket = new Socket("10.184.46.131", 9999)) {
+        try (Socket socket = new Socket("localhost", 9999)) {
+            //try (Socket socket = new Socket("10.184.78.33", 9999)) {
             System.out.println("Connected to server");
 
             //Server Input and Output Streams

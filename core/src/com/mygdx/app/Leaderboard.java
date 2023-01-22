@@ -9,6 +9,14 @@ public class Leaderboard implements Serializable {
     private int hoursPerStreak;
     private User creator;
 
+    public Leaderboard(User user) {
+        ArrayList<User> users = new ArrayList<>();
+        users.add(user);
+        this.users = users;
+        this.hoursPerStreak = 4;
+        this.creator = user;
+    }
+
     public Leaderboard(ArrayList<User> users, int hoursPerStreak, User creator) {
         this.users = users;
         this.hoursPerStreak = hoursPerStreak;
@@ -37,5 +45,13 @@ public class Leaderboard implements Serializable {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public boolean removeUser(User user) {
+        return users.remove(user);
     }
 }
